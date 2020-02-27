@@ -11,6 +11,7 @@ class Roman extends Livre
     const POLICIER = 2;
     const AVENTURE = 3;
     const HISTORIQUE = 4;
+    const PHILOSOPHIQUE = 5;
 
     public function __construct(string $ecrivain, string $titre, int $annePublication, int $genre)
     {
@@ -35,7 +36,25 @@ class Roman extends Livre
 
     public function __toString()
     {
-        $string = "<p>Le livre {$this->titre}, de genr {$this->genre}, a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} et ";
+        switch ($this->genre) {
+            case 1:
+                $genre = "THRILLER";
+                break;
+            case 2:
+                $genre = "POLICIER";
+                break;
+            case 3:
+                $genre = "AVENTURE";
+                break;
+            case 4:
+                $genre = "HISTORIQUE";
+                break;
+            case 5:
+                $genre = "PHILOSOPHIQUE";
+                break;
+        }
+
+        $string = "<p>Le livre {$this->titre}, du genre {$genre}, qui a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} ";
         $string .= $this->disponibilite = 1 ? "est disponible" : "n'est plus disponible";
 
         return $string;

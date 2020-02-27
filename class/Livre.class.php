@@ -114,7 +114,7 @@ class Livre {
 
     public function __toString()
     {
-        $string = "<p>Le livre {$this->titre} a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} et ";
+        $string = "<p>Le livre {$this->titre} qui a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} ";
         $string .= $this->disponibilite = 1 ? "est disponible" : "n'est plus disponible";
 
         return $string;
