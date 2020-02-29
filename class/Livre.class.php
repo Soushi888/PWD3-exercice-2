@@ -57,9 +57,9 @@ class Livre
     /**
      * @return this annePublication
      */
-    public function getAnnePublication()
+    public function getAnneePublication()
     {
-        return $this->annePublication;
+        return $this->anneePublication;
     }
 
     /**
@@ -98,17 +98,24 @@ class Livre
     }
 
     /**
-     * @param int $annePublication
+     * @param int $anneePublication
      * 
      * @return this
      */
-    public function setAnnePublication($annePublication = 0)
+    public function setAnneePublication($anneePublication = 0)
     {
-        if (is_int($annePublication)) {
-            $this->annePublication = $annePublication;
-            return true;
-        } else {
-            Trace::writeLog("L'année de publication doit être un entier numérique.");
+
+        $this->anneePublication = $anneePublication;
+
+        try {
+            if (is_int($anneePublication)) {
+                $this->anneePublication = $anneePublication;
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            echo "<br>" . __METHOD__ . " -> erreur : " . $e->getMessage() . "<br>";
             return false;
         }
     }
@@ -124,18 +131,20 @@ class Livre
             $this->disponibilite = $disponibilite;
 
             return true;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             echo "<br>" . __METHOD__ . " -> erreur : " . $e->getMessage() . "<br>";
-            exit;
+            return false;
         }
     }
 
+    /**
+     * @return string Texte indiquant l'état d'un objet
+     */
     public function __toString()
     {
         try {
             $string = "<p>Le livre {$this->titre} qui a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} ";
-            $string .= $this->disponibilite = 1 ? "est disponible" : "n'est plus disponible";
+            $string .= $this->disponibilite == 1 ? "est disponible" : "n'est plus disponible";
 
             return $string;
         } catch (\Exception $e) {
