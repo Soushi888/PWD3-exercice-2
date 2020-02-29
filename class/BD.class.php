@@ -24,7 +24,7 @@ class BD extends Livre
 
     public function __toString()
     {
-        $string = "<p>Le livre {$this->titre}, écrit par {$this->ecrivain} en l'an {$this->anneePublication} et dessiné par {$this->dessinateur} ";
+        $string = "<p>La bande dessinnée {$this->titre}, écrit par {$this->ecrivain} en l'an {$this->anneePublication} et dessiné par {$this->dessinateur} ";
         $string .= $this->disponibilite == 1 ? "est disponible" : "n'est plus disponible";
 
         return $string;

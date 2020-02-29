@@ -1,10 +1,14 @@
 <?php
+
 namespace PWD3;
+
+use Exception;
 
 /**
  * Class Livre
  */
-class Livre {
+class Livre
+{
     protected $ecrivain = "";
     protected $titre = "";
     protected $anneePublication = 0;
@@ -17,7 +21,7 @@ class Livre {
      * 
      * @return void
      */
-    public function __construct(string $ecrivain = "", string $titre = "", int $anneePublication = 0 )
+    public function __construct(string $ecrivain = "", string $titre = "", int $anneePublication = 0)
     {
         $this->ecrivain = $ecrivain;
         $this->titre = $titre;
@@ -28,8 +32,9 @@ class Livre {
      * Accesseur magique d'une propriété de l'objet
      *
      * @return <type de la propriété>
-     */     
-    public function __get($prop) {
+     */
+    public function __get($prop)
+    {
         return $this->$prop;
     }
 
@@ -68,7 +73,7 @@ class Livre {
 
     public function __set($prop, $val)
     {
-        $setProperty = 'set'.ucfirst($prop);
+        $setProperty = 'set' . ucfirst($prop);
         $this->$setProperty($val);
     }
 
@@ -91,15 +96,21 @@ class Livre {
     {
         $this->titre = $titre;
     }
-    
+
     /**
      * @param int $annePublication
      * 
      * @return this
      */
-    public function setAnnePublication(int $annePublication = 0)
+    public function setAnnePublication($annePublication = 0)
     {
-        $this->annePublication = $annePublication;
+        if (is_int($annePublication)) {
+            $this->annePublication = $annePublication;
+            return true;
+        } else {
+            Trace::writeLog("L'année de publication doit être un entier numérique.");
+            return false;
+        }
     }
 
     /**
@@ -109,14 +120,27 @@ class Livre {
      */
     public function setDisponibilite(bool $disponibilite = true)
     {
-        $this->disponibilite = $disponibilite;
+        try {
+            $this->disponibilite = $disponibilite;
+
+            return true;
+        }
+        catch (Exception $e) {
+            echo "<br>" . __METHOD__ . " -> erreur : " . $e->getMessage() . "<br>";
+            exit;
+        }
     }
 
     public function __toString()
     {
-        $string = "<p>Le livre {$this->titre} qui a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} ";
-        $string .= $this->disponibilite = 1 ? "est disponible" : "n'est plus disponible";
+        try {
+            $string = "<p>Le livre {$this->titre} qui a été écrit par {$this->ecrivain} en l'an {$this->anneePublication} ";
+            $string .= $this->disponibilite = 1 ? "est disponible" : "n'est plus disponible";
 
-        return $string;
+            return $string;
+        } catch (\Exception $e) {
+            echo "<br>" . __METHOD__ . " -> erreur : " . $e->getMessage() . "<br>";
+            exit;
+        }
     }
 }
